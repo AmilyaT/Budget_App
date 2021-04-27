@@ -14,7 +14,10 @@ class Category:
 
     def check_balance(self, amount):
         if amount > self.amount:
-            return False    
+            return "Insufficient funds available for this transaction. Your current balance is: {}".format(self.amount)
+        elif amount < self.amount:
+            return "Your request has been processed."
+    
         
 
     def withdraw(self, amount):
