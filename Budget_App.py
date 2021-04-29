@@ -14,18 +14,23 @@ class Category:
 
     def check_balance(self, amount):
         if amount > self.amount:
-            return "Insufficient funds available for this transaction. Your current balance is: {}".format(self.amount)
-        elif amount < self.amount:
-            return "Your request has been processed."
-    
-        
+            return False
+        else:
+             return True
+       
 
     def withdraw(self, amount):
         self.amount -= amount
         return "You have successfully withdrawn {} from {} category".format(amount, self.category)
 
     def transfer(self, amount, category):
-        return self.withdraw(amount) + "" + category.deposit(amount)
+        if not self.check_balance(amount):
+            return "Insufficient funds, transfer not possible"
+        else:
+            self.amount -= amount
+            category.deposit(amount)
+            return "You have succesffully transfered: $ {} to {} category".format(amount, category.category)
+        
 
     
 clothing_category = Category("Clothing", 200)
@@ -36,5 +41,6 @@ education_category = Category("Tuition", 1200)
 
 
 #print(food_category.budget_balance())
-print(food_category.check_balance(300))
+#print(food_category.check_balance(300))
+print(food_category.transfer(20, car_category))
 
